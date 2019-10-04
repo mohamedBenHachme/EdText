@@ -121,20 +121,7 @@ public class Search extends JFrame implements ActionListener {
     } 
 	
 	
-	public void find(){
-		select_start = txt.getText().toLowerCase().indexOf(textF.getText().toLowerCase());
-		if(select_start == -1){
-			startIndex = 0;
-			JOptionPane.showMessageDialog(null, "Could not find \"" + textF.getText() + "\"!");
-		}
-		if( select_start == txt.getText().toLowerCase().lastIndexOf(textF.getText().toLowerCase()))
-			startIndex = 0;
 	
-		int select_end = select_start + textF.getText().length();
-		System.out.println("find indexs  : "+ select_start+" -> "+select_end);
-		txt.select(select_start, select_end);
-				
-	}
 	public void replace(){
 		try{
 			patternSearching();
@@ -150,7 +137,6 @@ public class Search extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == findbtn) {
-				//find();
 				patternSearching();
 		}		
 		else if(e.getSource() == replace)
