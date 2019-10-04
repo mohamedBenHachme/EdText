@@ -77,6 +77,50 @@ public class Search extends JFrame implements ActionListener {
         
 	}
 	
+	
+	public final static int d = 256; 
+	  
+    // function that implements Rabin-Karp Algorithm for pattern Searching in a given text
+    
+	public void patternSearching() 
+    {   int q = 101;
+    	String pattern = textF.getText().toLowerCase();
+    	String text = txt.getText().toLowerCase();
+        int M = pattern.length(); 
+        int N = text.length(); 
+        int i, j; 
+        int p = 0; 
+        int t = 0; 
+        int h = 1;
+        for (i = 0; i < M - 1; i++) 
+            h = (h * d) % q; 
+  
+        for (i = 0; i < M; i++) { 
+            p = (d * p + pattern.charAt(i)) % q; 
+            t = (d * t + text.charAt(i)) % q; 
+        }
+        for (i = 0; i <= N - M; i++) { 
+            if (p == t) { 
+                for (j = 0; j < M; j++) { 
+                    if (text.charAt(i + j) != pattern.charAt(j)) 
+                        break; 
+                }
+                if (j == M) {
+                	select_start = i;
+                	int select_end = select_start + textF.getText().length();
+                	txt.select(select_start, select_end);
+                	break;
+                }
+            }
+            if (i < N - M) { 
+                t = (d * (t - text.charAt(i) * h) + text.charAt(i + M)) % q;
+                if (t < 0) 
+                    t = (t + q); 
+            } 
+        }
+    } 
+	
+	
 	public void find(){
 		select_start = txt.getText().toLowerCase().indexOf(textF.getText().toLowerCase());
 		if(select_start == -1){
@@ -87,12 +131,13 @@ public class Search extends JFrame implements ActionListener {
 			startIndex = 0;
 	
 		int select_end = select_start + textF.getText().length();
+		System.out.println("find indexs  : "+ select_start+" -> "+select_end);
 		txt.select(select_start, select_end);
 				
 	}
 	public void replace(){
 		try{
-			find();
+			patternSearching();
 			if(select_start != -1)
 				txt.replaceSelection(textR.getText());
 		}catch(NullPointerException e){
@@ -104,8 +149,10 @@ public class Search extends JFrame implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == findbtn)
-				find();
+		if(e.getSource() == findbtn) {
+				//find();
+				patternSearching();
+		}		
 		else if(e.getSource() == replace)
 				replace();
 		else if(e.getSource() == replaceAll)
