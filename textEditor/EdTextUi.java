@@ -115,9 +115,8 @@ class EdTextUi extends JFrame implements ActionListener {
         f.pack();
         f.setLocationByPlatform(true);
         f.setVisible(true);
-        f.setResizable(true);
         f.setSize(500, 500);
-        f.setVisible(true);
+        f.setResizable(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
         f.show();
     } 
